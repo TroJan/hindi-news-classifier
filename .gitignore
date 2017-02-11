@@ -7,3 +7,13 @@ pyenv/*
 # Local git config
 .gitconfig
 
+# db files
+src/db.sqlite3
+
+# Static folders
+src/static/
+
+# admin and bower related static folders
+src/newsclassifier/static/admin
+src/newsclassifier/static/admin_tools
+src/newsclassifier/static/bower_components
