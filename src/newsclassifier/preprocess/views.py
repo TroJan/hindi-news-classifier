@@ -102,3 +102,35 @@ class StopWordsRemovalView(ListView):
             'stopwords_present': stopwords_present,
         })
 
+
+class PreprocessAllView(ListView):
+
+    template_name = 'preprocess/all.html'
+    form_class = PreprocessForm
+
+    def get(self, request, *args, **kwargs):
+        form_obj = self.form_class(request.GET or None)
+        tokens = None
+        stem_map = OrderedDict()
+        freq_map = OrderedDict()
+        no_stopwords_tokens = None
+        if form_obj.is_valid():
+            text = form_obj.cleaned_data.get('text')
+            tokens = tokenize(text)
+            # remove hyphenated and duplicate hyphented words
+            tokens = remove_hyphenated_tokens(tokens)
+            stopwords = stopwords_list()
+
+            no_stopwords_tokens = [token for token in tokens
+                                   if token.encode('utf8') not in stopwords]
+
+            for token in no_stopwords_tokens:
+                stem_map[token] = stem(token)
+                freq_map.setdefault(token, 0)
+                freq_map[token] += 1
+
+        return render(request, self.template_name, {
+            'form': form_obj,
+            'preprocess_output': stem_map,
+            'freq_map': freq_map
+        })

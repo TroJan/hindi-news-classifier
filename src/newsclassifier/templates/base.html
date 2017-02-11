@@ -38,7 +38,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
 
-                <li class="dropdown {% if request.resolver_match.url_name in 'tokenize_view, stem_view' %}active {% endif %}">
+                <li class="dropdown {% if request.resolver_match.url_name in 'tokenize_view, stem_view, stopwords_view, all_preprocess_view' %}active {% endif %}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Preprocess<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li {% if request.resolver_match.url_name == 'tokenize_view' %}class="active"{% endif %}>
@@ -49,6 +49,9 @@
                     </li>
                     <li {% if request.resolver_match.url_name == 'stopwords_view' %}class="active"{% endif %}>
                         <a href="{% url 'preprocess:stopwords_view' %}" >StopWords</a>
+                    </li>
+                    <li {% if request.resolver_match.url_name == 'all_preprocess_view' %}class="active"{% endif %}>
+                        <a href="{% url 'preprocess:all_preprocess_view' %}" >Preprocess All</a>
                     </li>
                 </ul>
                 </li>
