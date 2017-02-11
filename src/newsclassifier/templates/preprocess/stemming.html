@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% block title %}Stem | Preprocess | {{block.super}} {% endblock %}
+{% block container %}
+
+    {{ block.super }}
+
+    <div class="col-sm-12 col-md-12">
+        <div class="row"></div>
+        <div class="row">
+
+            {% include "message.html" %}
+
+            <form>
+                <div class="form-group">
+                    <label for="inputText">Input Text</label>
+                    {{ form.text }}
+                </div>
+                <div class="form-group">
+                <div class="col-sm-3 col-sm-offset-3">
+                    <button type="submit"  id="send" class="btn btn-info btn-block">Stem</button>
+                </div>
+
+                <div class="col-sm-3">
+                    <a type="submit"  id="reset" href="{% url 'preprocess:stem_view' %}" class="btn btn-warning btn-block">Clear</a>
+                </div>
+                </div>
+            </form>
+        </div>
+        <hr/>
+
+        {% if stem_words %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Stem Word</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered">
+                {% for token, stem_value in stem_words.items %}
+                    <tr>
+                        <td>{{token}}</td><td>{{stem_value}}</td>
+                    </tr>
+                {% endfor %}
+
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}
+

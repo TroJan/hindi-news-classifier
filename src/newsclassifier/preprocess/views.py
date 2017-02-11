@@ -5,15 +5,14 @@ from hinditokenizer import *
 from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import ListView
-from django.views.generic.detail import SingleObjectMixin, DetailView
 
 from .forms import *
 
 
-class TokenizeView(SingleObjectMixin, ListView):
+class TokenizeView(ListView):
 
     template_name = 'preprocess/tokenize.html'
-    form_class = TokenizeForm
+    form_class = PreprocessForm
 
     def get(self, request, *args, **kwargs):
         form_obj = self.form_class(request.GET or None)
@@ -52,3 +51,28 @@ class TokenizeView(SingleObjectMixin, ListView):
             'tokens': tokens,
             'unique_tokens': unique_tokens_map,
         })
+
+
+class StemmingView(ListView):
+
+    template_name = 'preprocess/stemming.html'
+    form_class = PreprocessForm
+
+    def get(self, request, *args, **kwargs):
+        form_obj = self.form_class(request.GET or None)
+        stem_map = OrderedDict()
+
+        if form_obj.is_valid():
+            text = form_obj.cleaned_data.get('text')
+            tokens = tokenize(text)
+            # remove hyphenated and duplicate hyphented words
+            tokens = remove_hyphenated_tokens(tokens)
+
+            for token in tokens:
+                stem_map[token] = stem(token)
+
+        return render(request, self.template_name, {
+            'form': form_obj,
+            'stem_words': stem_map
+        })
+
