@@ -1,0 +1,2 @@
+django < 1.9
+django-admin-tools==0.8.0
