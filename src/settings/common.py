@@ -49,6 +49,7 @@ PREFIX_THIRD_PARTY_APPS = (
 
 OUR_APPS = (
     'newsclassifier.base',
+    'newsclassifier.preprocess',
 )
 
 INSTALLED_APPS = PREFIX_THIRD_PARTY_APPS + CORE_APPS + OUR_APPS + THIRD_PARTY_APPS
