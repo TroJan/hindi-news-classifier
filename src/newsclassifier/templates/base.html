@@ -47,6 +47,9 @@
                     <li {% if request.resolver_match.url_name == 'stem_view' %}class="active"{% endif %}>
                         <a href="{% url 'preprocess:stem_view' %}" >Stem</a>
                     </li>
+                    <li {% if request.resolver_match.url_name == 'stopwords_view' %}class="active"{% endif %}>
+                        <a href="{% url 'preprocess:stopwords_view' %}" >StopWords</a>
+                    </li>
                 </ul>
                 </li>
                 {% if request.user.is_superuser %}

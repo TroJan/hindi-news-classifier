@@ -76,3 +76,29 @@ class StemmingView(ListView):
             'stem_words': stem_map
         })
 
+
+class StopWordsRemovalView(ListView):
+
+    template_name = 'preprocess/stopwords.html'
+    form_class = PreprocessForm
+
+    def get(self, request, *args, **kwargs):
+        form_obj = self.form_class(request.GET or None)
+        no_stopwords_tokens = None
+        if form_obj.is_valid():
+            text = form_obj.cleaned_data.get('text')
+            tokens = tokenize(text)
+            # remove hyphenated and duplicate hyphented words
+            tokens = remove_hyphenated_tokens(tokens)
+            stopwords = stopwords_list()
+
+            no_stopwords_tokens = [token for token in tokens if token.encode('utf8') not in stopwords]
+
+            stopwords_present = list(set(tokens) - set(no_stopwords_tokens))
+
+        return render(request, self.template_name, {
+            'form': form_obj,
+            'no_stopwords_tokens': no_stopwords_tokens,
+            'stopwords_present': stopwords_present,
+        })
+

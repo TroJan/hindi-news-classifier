@@ -1,36 +1,15 @@
-{% extends "base.html" %}
+{% extends "preprocess/base.html" %}
 
 {% load staticfiles %}
-{% block title %}Tokenize | Preprocess | {{block.super}} {% endblock %}
+{% block title %}Tokenize | {{block.super}} {% endblock %}
+{% block processbutton %}Tokenize{% endblock %}
+{% block clearbutton %}{% url 'preprocess:tokenize_view' %}{% endblock %}
+
 {% block container %}
 
     {{ block.super }}
 
-    <div class="col-sm-12 col-md-12">
-        <div class="row"></div>
-        <div class="row">
-
-            {% include "message.html" %}
-
-            <form>
-                <div class="form-group">
-                    <label for="inputText">Input Text</label>
-                    {{ form.text }}
-                </div>
-                <div class="form-group">
-                <div class="col-sm-3 col-sm-offset-3">
-                    <button type="submit"  id="send" class="btn btn-info btn-block">Tokenize</button>
-                </div>
-
-                <div class="col-sm-3">
-                    <a type="submit"  id="reset" href="{% url 'preprocess:tokenize_view' %}" class="btn btn-warning btn-block">Clear</a>
-                </div>
-                </div>
-            </form>
-        </div>
-        <hr/>
-
-        {% if sentences %}
+    {% if sentences %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Sentences ({{ sentences|length }})</h3>
@@ -41,9 +20,9 @@
                 {% endfor %}
             </div>
         </div>
-        {% endif %}
+    {% endif %}
 
-        {% if tokens %}
+    {% if tokens %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Tokens ({{ tokens|length }})</h3>
@@ -56,9 +35,9 @@
                 </ul>
             </div>
         </div>
-        {% endif %}
+    {% endif %}
 
-        {% if no_hyphen_tokens %}
+    {% if no_hyphen_tokens %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Hyphenated Striped Tokens ({{ no_hyphen_tokens|length }})</h3>
@@ -71,9 +50,9 @@
                 </ul>
             </div>
         </div>
-        {% endif %}
+    {% endif %}
 
-        {% if unique_tokens %}
+    {% if unique_tokens %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Unique Tokens ({{ unique_tokens|length }})</h3>
@@ -86,10 +65,6 @@
                 </ul>
             </div>
         </div>
-        {% endif %}
-
-        </div>
-    </div>
+    {% endif %}
 
 {% endblock %}
-
