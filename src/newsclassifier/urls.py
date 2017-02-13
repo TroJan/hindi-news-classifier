@@ -4,6 +4,9 @@ from django.contrib import admin
 
 urlpatterns = [
 
+    url(r'classify/', include('newsclassifier.classifier.urls',
+                      namespace='classifier')),
+
     url(r'', include('newsclassifier.preprocess.urls',
                       namespace='preprocess')),
 

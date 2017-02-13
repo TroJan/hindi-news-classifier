@@ -49,6 +49,7 @@ PREFIX_THIRD_PARTY_APPS = (
 
 OUR_APPS = (
     'newsclassifier.base',
+    'newsclassifier.classifier',
     'newsclassifier.preprocess',
 )
 

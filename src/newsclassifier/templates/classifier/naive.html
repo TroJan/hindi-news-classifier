@@ -1,0 +1,26 @@
+{% extends "classifier/base.html" %}
+
+{% load staticfiles %}
+{% block title %}Naive Bayes | {{block.super}} {% endblock %}
+{% block processbutton %}Classify{% endblock %}
+{% block clearbutton %}{% url 'classifier:naive_classify_view' %}{% endblock %}
+
+{% block container %}
+
+    {{ block.super }}
+
+    {% if outcome %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ outcome }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+{% endblock %}

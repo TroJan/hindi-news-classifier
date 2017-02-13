@@ -6,7 +6,9 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import ListView
 
+
 from .forms import *
+from .utils import preprocess_text_without_stemming
 
 
 class TokenizeView(ListView):
@@ -116,13 +118,8 @@ class PreprocessAllView(ListView):
         no_stopwords_tokens = None
         if form_obj.is_valid():
             text = form_obj.cleaned_data.get('text')
-            tokens = tokenize(text)
             # remove hyphenated and duplicate hyphented words
-            tokens = remove_hyphenated_tokens(tokens)
-            stopwords = stopwords_list()
-
-            no_stopwords_tokens = [token for token in tokens
-                                   if token.encode('utf8') not in stopwords]
+            no_stopwords_tokens = preprocess_text_without_stemming(text)
 
             for token in no_stopwords_tokens:
                 stem_map[token] = stem(token)

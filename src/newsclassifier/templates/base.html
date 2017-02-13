@@ -38,7 +38,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
 
-                <li class="dropdown {% if request.resolver_match.url_name in 'tokenize_view, stem_view, stopwords_view, all_preprocess_view' %}active {% endif %}">
+                <li class="dropdown {% if request.resolver_match.namespace in 'preprocess' %}active {% endif %}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Preprocess<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li {% if request.resolver_match.url_name == 'tokenize_view' %}class="active"{% endif %}>
@@ -55,10 +55,18 @@
                     </li>
                 </ul>
                 </li>
+                <li class="dropdown {% if request.resolver_match.namespace in 'classifier' %}active {% endif %}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Classify<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li {% if request.resolver_match.url_name == 'naive_classify_view' %}class="active"{% endif %}>
+                        <a href="{% url 'classifier:naive_classify_view' %}">Classify</a>
+                    </li>
+                </ul>
                 {% if request.user.is_superuser %}
                 <li>
                     <a href="/admin" target="_blank">Admin</a>
                 </li>
+
                 {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
